@@ -6,8 +6,6 @@ const srcDir = path.join(__dirname, '..', 'src');
 module.exports = {
   entry: [
     path.join(srcDir, 'main.ts'),
-    path.join(srcDir, '/assets/sass/common.scss'),
-
   ],
   output: {
     publicPath: '',
@@ -23,17 +21,6 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: { outputPath: '../css/', name: '[name].css' },
-          },
-          'sass-loader',
-        ],
       },
     ],
   },

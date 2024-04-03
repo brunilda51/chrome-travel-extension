@@ -10,14 +10,13 @@
   "web_accessible_resources": [
     {
       "resources": ["images/app/*.png"],
-      "matches": ["*://*.skyscanner.com/*", "*://*.kayak.com/*"]
+      "matches": ["*://*/*"]
     }
   ],
   "content_scripts": [
     {
-      "matches": ["*://*.skyscanner.com/*", "*://*.kayak.com/*"],
-      "js": ["js/main.js"],
-      "css": ["css/common.css"]
+      "matches": ["*://*/*"],
+      "js": ["js/main.js"]
     }
   ],
   "permissions": ["storage"],
