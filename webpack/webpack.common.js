@@ -1,33 +1,25 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const srcDir = path.join(__dirname, '..', 'src');
+const path = require('path');
 
 module.exports = {
-  entry: [
-    path.join(srcDir, 'main.ts'),
-  ],
+  mode: 'production',
+  target: 'web',
+  entry: {
+    contentScript: './src/content/index.ts',
+    background: './src/background/index.ts',
+    react: './src/react/index.tsx',
+  },
   output: {
     publicPath: '',
     path: path.join(__dirname, '../dist/js'),
     filename: '[name].js',
   },
-  optimization: {
-    runtimeChunk: false,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      inject: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'public', to: '../' },
@@ -36,4 +28,25 @@ module.exports = {
       options: {},
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              ['@babel/preset-react', { runtime: 'automatic' }],
+              '@babel/preset-typescript',
+            ],
+          },
+        },
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx'],
+  },
 };

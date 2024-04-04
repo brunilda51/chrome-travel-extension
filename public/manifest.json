@@ -3,27 +3,22 @@
   "description": "Good luck. You got this!",
   "version": "0.0.1",
   "manifest_version": 3,
-  "action": {
-    "default_icon": "images/icons/favicon.ico",
-    "default_title": "eco.mio | Decarbonize Business Travel"
-  },
   "web_accessible_resources": [
     {
       "resources": ["images/app/*.png"],
       "matches": ["*://*/*"]
     }
   ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
-      "js": ["js/main.js"]
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
     }
-  ],
-  "permissions": ["storage"],
-  "icons": {
-    "16": "images/icons/ecomio16.png",
-    "32": "images/icons/ecomio32.png",
-    "48": "images/icons/ecomio48.png",
-    "128": "images/icons/ecomio128.png"
-  }
+  ]
 }
