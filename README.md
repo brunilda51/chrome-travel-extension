@@ -80,7 +80,7 @@ The overall project is structured as follows:
       ├── src
       └── webpack
 
-_*not checked in_
+_\*not checked in_
 
 - **dist:**
   - the build files (once created)
