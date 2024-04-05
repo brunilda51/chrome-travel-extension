@@ -1,22 +1,35 @@
-import React from 'react';
-
-const dogSrc: string = 'https://media.tenor.com/fej4_qoxdHYAAAAM/cute-puppy.gif';
-
-const generateDogGif = async () => {
-  // Get the active tab
-  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-  const activeTab = tabs[0];
-  // Send the dog Gif
-  chrome.tabs.sendMessage(activeTab.id || 0, dogSrc);
-};
+import React, { useEffect, useState } from 'react';
 
 const App = () => {
-  return (
-    <main>
-      <h1>Add a Dog Gif to Webpage</h1>
-      <img src={dogSrc} />
-      <button onClick={generateDogGif}>Generate Dog Gif</button>
-    </main>
-  );
+  const [destination, setDestination] = useState<any>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Retrieve data from chrome.storage.local
+        const data = await new Promise((resolve, reject) => {
+          chrome.storage.local.get('destination', (result) => {
+            if (chrome.runtime.lastError) {
+              reject(chrome.runtime.lastError);
+            } else {
+              resolve(result.destination);
+            }
+          });
+        });
+
+        // Check if data is not empty before setting the state
+        if (data !== undefined && data !== null) {
+          setDestination(data);
+        }
+      } catch (error) {
+        console.error('Error fetching data from chrome.storage.local:', error);
+      }
+    };
+
+    fetchData(); // Call the fetchData function inside useEffect
+  }, []); // Empty dependency array means this effect runs only once after the component mounts
+
+  return <main>{destination && <h1>{destination}</h1>}</main>;
 };
+
 export default App;
