@@ -23,6 +23,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'public', to: '../' },
+        { from: 'src/output.css', to: './output.css' },
+        { from: 'src/index.css', to: './index.css' },
         { from: 'icons/*', to: '../images', context: 'src/assets/images/' },
       ],
       options: {},
@@ -43,6 +45,14 @@ module.exports = {
             ],
           },
         },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader', // Add postcss-loader here
+        ],
       },
     ],
   },

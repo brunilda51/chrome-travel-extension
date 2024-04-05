@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import 'tailwindcss/tailwind.css';
 const App = () => {
   const [destination, setDestination] = useState<any>();
 
@@ -29,7 +29,29 @@ const App = () => {
     fetchData(); // Call the fetchData function inside useEffect
   }, []); // Empty dependency array means this effect runs only once after the component mounts
 
-  return <main>{destination && <h1>{destination}</h1>}</main>;
+  return (
+    <div className="rounded-3xl shadow-lg w-96 h-46 bg-white">
+      <div className="text-center">
+        <h2 className="text-xl font-semibold mb-4">Modal Title</h2>
+        <p className="text-gray-600">{destination}</p>
+      </div>
+
+      <button
+        className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 focus:outline-none"
+        aria-label="Close modal"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  );
 };
 
 export default App;
