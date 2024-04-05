@@ -1,3 +1,5 @@
+import React from 'react';
+
 const dogSrc: string = 'https://media.tenor.com/fej4_qoxdHYAAAAM/cute-puppy.gif';
 
 const generateDogGif = async () => {
