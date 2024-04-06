@@ -7,8 +7,9 @@ module.exports = {
   target: 'web',
   entry: {
     contentScript: './src/content/index.ts',
+    options: './src/options/index.tsx',
     background: './src/background/index.ts',
-    react: './src/react/index.tsx',
+    popup: './src/popup/index.tsx',
   },
   output: {
     publicPath: '',
@@ -17,7 +18,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/popup/popup.html',
+      filename: 'popup.html', // Specify the filename for popup.html
+      inject: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/options/options.html',
+      filename: 'options.html', // Specify the filename for options.html
       inject: false,
     }),
     new CopyPlugin({

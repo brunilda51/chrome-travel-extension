@@ -10,8 +10,9 @@
     }
   ],
   "action": {
-    "default_popup": "js/index.html"
+    "default_popup": "js/popup.html"
   },
+  "options_page": "js/options.html",
   "background": {
     "service_worker": "js/background.js"
   },
