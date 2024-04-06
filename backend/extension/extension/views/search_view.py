@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+import json
 from django.views.decorators.csrf import csrf_exempt
 from ..models import  Place, Search, User
 from django.core.exceptions import ObjectDoesNotExist
@@ -12,11 +13,14 @@ def search_list(request):
         return JsonResponse(data, safe=False)
     
     elif request.method == 'POST':
+        body = request.body.decode('utf-8')
+        
+        data = json.loads(body)
         search_data = {
-            'sustainability_score': request.POST.get('sustainability_score'),
-            'origin_id': request.POST.get('origin_id'),
-            'destination_id': request.POST.get('destination_id'),
-            'flight_duration': request.POST.get('flight_duration')
+            'sustainability_score': data.get('sustainability_score'),
+            'origin_id': data.get('origin_id'),
+            'destination_id': data.get('destination_id'),
+            'flight_duration': data.get('flight_duration')
         }
         search = Search.objects.create(**search_data)
         return JsonResponse({'id': search.id, 'sustainability_score': search.sustainability_score, 'origin_id': search.origin_id, 'destination_id': search.destination_id, 'flight_duration': search.flight_duration})
@@ -33,10 +37,10 @@ def search_detail(request, pk):
         return JsonResponse(data)
     
     elif request.method == 'PUT':
-        search.sustainability_score = request.POST.get('sustainability_score')
-        search.origin_id = request.POST.get('origin_id')
-        search.destination_id = request.POST.get('destination_id')
-        search.flight_duration = request.POST.get('flight_duration')
+        search.sustainability_score = data.get('sustainability_score')
+        search.origin_id = data.get('origin_id')
+        search.destination_id = data.get('destination_id')
+        search.flight_duration = data.get('flight_duration')
         search.save()
         return JsonResponse({'message': 'Search updated successfully'})
     

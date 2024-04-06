@@ -3,6 +3,7 @@ from django.db import models
 class Place(models.Model):
     city_name = models.CharField(max_length=255)
     country_name = models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
     id = models.AutoField(primary_key=True)
     description = models.TextField()
 

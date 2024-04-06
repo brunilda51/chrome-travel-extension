@@ -3,6 +3,7 @@ import FlightCard from './FlightCard/FlightCard';
 
 const App = () => {
   const [flightData, setFlightData] = useState<any>();
+
   useEffect(() => {
     const fetchData = async () => {
       try {

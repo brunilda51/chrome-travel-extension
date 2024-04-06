@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, Typography } from '@mui/material';
 
 const FlightCard = ({ flightData }: any) => {
   const { origin, destination, departDate, returnDate, travelers } = flightData;
-  console.log(origin, flightData);
+
   return (
     <Card sx={{ padding: 10, boxShadow: 4, width: 400 }}>
       <CardHeader

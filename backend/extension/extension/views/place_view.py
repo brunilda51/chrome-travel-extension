@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+import json
 from django.views.decorators.csrf import csrf_exempt
 from ..models import  Place, Search, User
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,15 +8,19 @@ from django.core.exceptions import ObjectDoesNotExist
 def place_list(request):
     if request.method == 'GET':
         places = Place.objects.all()
-        data = [{'id': place.id, 'city_name': place.city_name, 'country_name': place.country_name, 'description': place.description} for place in places]
+        data = [{'id': place.id, 'city_name': place.city_name, 'country_name': place.country_name, 'description': place.description, 'code': place.code} for place in places]
         return JsonResponse(data, safe=False)
     
     elif request.method == 'POST':
+        body = request.body.decode('utf-8')
+        
+        # Parse the JSON data
+        data = json.loads(body)
         place_data = {
-            'city_name': request.POST.get('city_name'),
-            'country_name': request.POST.get('country_name'),
-            'code': request.POST.get('code'),
-            'description': request.POST.get('description')
+            'city_name': data.get('city_name'),
+            'country_name': data.get('country_name'),
+            'code': data.get('code'),
+            'description': data.get('description')
         }
         place = Place.objects.create(**place_data)
         return JsonResponse({'id': place.id, 'city_name': place.city_name, 'country_name': place.country_name, 'description': place.description})
@@ -32,10 +37,10 @@ def place_detail(request, pk):
         return JsonResponse(data)
     
     elif request.method == 'PUT':
-        place.city_name = request.POST.get('city_name')
-        place.country_name = request.POST.get('country_name')
-        place.description = request.POST.get('description')
-        place.code = request.POST.get('code')
+        place.city_name = data.get('city_name')
+        place.country_name = data.get('country_name')
+        place.description = data.get('description')
+        place.code = data.get('code')
         place.save()
         return JsonResponse({'message': 'Place updated successfully'})
     

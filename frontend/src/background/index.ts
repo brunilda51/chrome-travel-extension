@@ -22,6 +22,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       returnDate: return_date,
       travelers: travelers,
     });
-    chrome.runtime.sendMessage({ action: 'saveFlight' });
+    chrome.runtime.sendMessage({
+      action: 'saveFlight',
+      message: {
+        destination: destinationLocation,
+        origin: origin_location,
+        departDate: depart_date,
+        returnDate: return_date,
+        travelers: travelers,
+      },
+    });
   }
 });

@@ -1,19 +1,28 @@
 openapi: '3.1.0'
 info:
-  title: Airline Search API
-  description: CRUD operations for Airlines, Places, Searches, and Users
+  title: CRUD API for Django Models
   version: 1.0.0
-servers:
-  - url: http://localhost:8000/api/v1
 paths:
-  /places:
+  /places/:
     get:
-      summary: Get all places
+      summary: Retrieve all places
+      tags:
+        - Places
+      operationId: listAllPlaces
       responses:
         '200':
           description: A list of places
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
     post:
-      summary: Add a new place
+      summary: Create a new place
+      tags:
+        - Places
+      operationId: createPlace
       requestBody:
         required: true
         content:
@@ -22,33 +31,41 @@ paths:
               $ref: '#/components/schemas/Place'
       responses:
         '201':
-          description: Successfully created
-        '400':
-          description: Bad request
-  /places/{placeId}:
+          description: The created place
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+  /places/{place_id}/:
     get:
-      summary: Get a specific place
+      summary: Retrieve a specific place
+      tags:
+        - Places
+      operationId: getPlaceById
       parameters:
         - in: path
-          name: placeId
+          name: place_id
           required: true
           schema:
             type: integer
-          description: ID of the place
       responses:
         '200':
-          description: A single place
-        '404':
-          description: Place not found
+          description: The requested place
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
     put:
-      summary: Update an existing place
+      summary: Update a specific place
+      tags:
+        - Places
+      operationId: updatePlace
       parameters:
         - in: path
-          name: placeId
+          name: place_id
           required: true
           schema:
             type: integer
-          description: ID of the place
       requestBody:
         required: true
         content:
@@ -57,34 +74,45 @@ paths:
               $ref: '#/components/schemas/Place'
       responses:
         '200':
-          description: Successfully updated
-        '400':
-          description: Bad request
-        '404':
-          description: Place not found
+          description: The updated place
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
     delete:
-      summary: Delete an existing place
+      summary: Delete a specific place
+      tags:
+        - Places
+      operationId: deletePlace
       parameters:
         - in: path
-          name: placeId
+          name: place_id
           required: true
           schema:
             type: integer
-          description: ID of the place
       responses:
         '204':
-          description: Successfully deleted
-        '404':
-          description: Place not found
-
-  /searches:
+          description: The place has been deleted
+  /searches/:
     get:
-      summary: Get all searches
+      summary: Retrieve all searches
+      tags:
+        - Searches
+      operationId: listAllSearches
       responses:
         '200':
           description: A list of searches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Search'
     post:
-      summary: Add a new search
+      summary: Create a new search
+      tags:
+        - Searches
+      operationId: createSearch
       requestBody:
         required: true
         content:
@@ -93,33 +121,41 @@ paths:
               $ref: '#/components/schemas/Search'
       responses:
         '201':
-          description: Successfully created
-        '400':
-          description: Bad request
-  /searches/{searchId}:
+          description: The created search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Search'
+  /searches/{search_id}/:
     get:
-      summary: Get a specific search
+      summary: Retrieve a specific search
+      tags:
+        - Searches
+      operationId: getSearchById
       parameters:
         - in: path
-          name: searchId
+          name: search_id
           required: true
           schema:
             type: integer
-          description: ID of the search
       responses:
         '200':
-          description: A single search
-        '404':
-          description: Search not found
+          description: The requested search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Search'
     put:
-      summary: Update an existing search
+      summary: Update a specific search
+      tags:
+        - Searches
+      operationId: updateSearch
       parameters:
         - in: path
-          name: searchId
+          name: search_id
           required: true
           schema:
             type: integer
-          description: ID of the search
       requestBody:
         required: true
         content:
@@ -128,34 +164,45 @@ paths:
               $ref: '#/components/schemas/Search'
       responses:
         '200':
-          description: Successfully updated
-        '400':
-          description: Bad request
-        '404':
-          description: Search not found
+          description: The updated search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Search'
     delete:
-      summary: Delete an existing search
+      summary: Delete a specific search
+      tags:
+        - Searches
+      operationId: deleteSearch
       parameters:
         - in: path
-          name: searchId
+          name: search_id
           required: true
           schema:
             type: integer
-          description: ID of the search
       responses:
         '204':
-          description: Successfully deleted
-        '404':
-          description: Search not found
-
-  /users:
+          description: The search has been deleted
+  /users/:
     get:
-      summary: Get all users
+      summary: Retrieve all users
+      tags:
+        - Users
+      operationId: listAllUsers
       responses:
         '200':
           description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
     post:
-      summary: Add a new user
+      summary: Create a new user
+      tags:
+        - Users
+      operationId: createUser
       requestBody:
         required: true
         content:
@@ -164,33 +211,41 @@ paths:
               $ref: '#/components/schemas/User'
       responses:
         '201':
-          description: Successfully created
-        '400':
-          description: Bad request
-  /users/{userId}:
+          description: The created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{user_id}/:
     get:
-      summary: Get a specific user
+      summary: Retrieve a specific user
+      tags:
+        - Users
+      operationId: getUserById
       parameters:
         - in: path
-          name: userId
+          name: user_id
           required: true
           schema:
             type: integer
-          description: ID of the user
       responses:
         '200':
-          description: A single user
-        '404':
-          description: User not found
+          description: The requested user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
     put:
-      summary: Update an existing user
+      summary: Update a specific user
+      tags:
+        - Users
+      operationId: updateUser
       parameters:
         - in: path
-          name: userId
+          name: user_id
           required: true
           schema:
             type: integer
-          description: ID of the user
       requestBody:
         required: true
         content:
@@ -199,26 +254,25 @@ paths:
               $ref: '#/components/schemas/User'
       responses:
         '200':
-          description: Successfully updated
-        '400':
-          description: Bad request
-        '404':
-          description: User not found
+          description: The updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
     delete:
-      summary: Delete an existing user
+      summary: Delete a specific user
+      tags:
+        - Users
+      operationId: deleteUser
       parameters:
         - in: path
-          name: userId
+          name: user_id
           required: true
           schema:
             type: integer
-          description: ID of the user
       responses:
         '204':
-          description: Successfully deleted
-        '404':
-          description: User not found
-
+          description: The user has been deleted
 components:
   schemas:
     Place:
@@ -239,19 +293,18 @@ components:
           type: integer
         sustainability_score:
           type: number
-        destination_id:
-          type: integer
+        destination:
+          $ref: '#/components/schemas/Place'
         flight_duration:
           type: string
-        origin_id:
-          type: integer
+        origin:
+          $ref: '#/components/schemas/Place'
     User:
       type: object
       properties:
-        user_id:
-          type: integer
         email:
           type: string
+          format: email
         googleid:
           type: string
         id:
@@ -264,3 +317,10 @@ components:
           type: string
         username:
           type: string
+tags:
+  - name: Places
+    description: Operations related to places
+  - name: Searches
+    description: Operations related to searches
+  - name: Users
+    description: Operations related to users
