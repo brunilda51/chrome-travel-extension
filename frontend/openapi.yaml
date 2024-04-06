@@ -293,12 +293,12 @@ components:
           type: integer
         sustainability_score:
           type: number
-        destination:
-          $ref: '#/components/schemas/Place'
+        destination_code:
+          type: string
         flight_duration:
           type: string
-        origin:
-          $ref: '#/components/schemas/Place'
+        origin_code:
+          type: string
     User:
       type: object
       properties:

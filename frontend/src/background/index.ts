@@ -1,13 +1,23 @@
-// Function to handle tab updates
-function handleTabUpdate(tabId: any, changeInfo: any, tab: any) {
-  if (changeInfo.status === 'complete') {
-    // Send a message to the content script to retrieve local storage data
-    chrome.tabs.sendMessage(tabId, { action: 'getLocalStorage' });
-  }
-}
+import searchService from '../services/search.service'; // Assuming the path to searchService.ts is correct
 
-// Listen for tab updates
-chrome.tabs.onUpdated.addListener(handleTabUpdate);
+// Example function to create a search in the background
+const createSearchInBackground = async () => {
+  try {
+    const dummySearchData = {
+      sustainability_score: 0.9,
+      destination_code: 'NYC',
+      origin_code: 'FRA',
+      flight_duration: '3 hours',
+    };
+
+    // Call the createSearch function
+    const createdSearch = await searchService.createSearch(dummySearchData);
+
+    console.log('Search created:', createdSearch);
+  } catch (error) {
+    console.error('Error creating search:', error);
+  }
+};
 
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -22,15 +32,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       returnDate: return_date,
       travelers: travelers,
     });
-    chrome.runtime.sendMessage({
-      action: 'saveFlight',
-      message: {
-        destination: destinationLocation,
-        origin: origin_location,
-        departDate: depart_date,
-        returnDate: return_date,
-        travelers: travelers,
-      },
-    });
+    createSearchInBackground();
   }
 });

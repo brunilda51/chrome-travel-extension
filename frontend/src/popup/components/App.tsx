@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import FlightCard from './FlightCard/FlightCard';
-
 const App = () => {
   const [flightData, setFlightData] = useState<any>();
 
@@ -24,7 +23,7 @@ const App = () => {
     };
 
     fetchData(); // Call the fetchData function inside useEffect
-  }, []); // Empty dependency array means this effect runs only once after the component mounts
+  }, [flightData]); // Empty dependency array means this effect runs only once after the component mounts
 
   return <>{flightData && <FlightCard flightData={flightData}></FlightCard>}</>;
 };

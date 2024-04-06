@@ -10,9 +10,9 @@ class Place(models.Model):
 class Search(models.Model):
     id = models.AutoField(primary_key=True) 
     sustainability_score = models.FloatField()
-    destination = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='searches_dest')
+    destination_code = models.CharField(max_length=50)  # Assuming destination code length
+    origin_code = models.CharField(max_length=50)  # Assuming origin code length
     flight_duration = models.CharField(max_length=255)
-    origin = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='searches_origin')
 
 class User(models.Model):
     email = models.EmailField()
