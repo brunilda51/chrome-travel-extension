@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from ..models import Airline, Place, Search, User
+from ..models import  Place, Search, User
 from django.core.exceptions import ObjectDoesNotExist
 # Views for Place model
 @csrf_exempt
@@ -14,6 +14,7 @@ def place_list(request):
         place_data = {
             'city_name': request.POST.get('city_name'),
             'country_name': request.POST.get('country_name'),
+            'code': request.POST.get('code'),
             'description': request.POST.get('description')
         }
         place = Place.objects.create(**place_data)
@@ -34,6 +35,7 @@ def place_detail(request, pk):
         place.city_name = request.POST.get('city_name')
         place.country_name = request.POST.get('country_name')
         place.description = request.POST.get('description')
+        place.code = request.POST.get('code')
         place.save()
         return JsonResponse({'message': 'Place updated successfully'})
     

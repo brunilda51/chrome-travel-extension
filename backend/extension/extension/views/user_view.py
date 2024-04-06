@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from ..models import Airline, Place, Search, User
+from ..models import Place, Search, User
 from django.core.exceptions import ObjectDoesNotExist
 import json  # Import the json module
 from django.db import IntegrityError  # Import IntegrityError from django.db module

@@ -13,9 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.urls import include, path
 from django.contrib import admin
-from .views import airline_view, place_view, search_view, user_view
+from .views import place_view, search_view, user_view
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 import yaml
@@ -38,22 +38,18 @@ schema_view = get_schema_view(
     public=True,
 )
 urlpatterns = [
-    # URLs for Airline model
-    url('airlines/', airline_view.airline_list, name='airline-list'),
-    url('airlines/<int:pk>/', airline_view.airline_detail, name='airline-detail'),
-
     # URLs for Place model
-    url('places/', place_view.place_list, name='place-list'),
-    url('places/<int:pk>/', place_view.place_detail, name='place-detail'),
+    path('places/', place_view.place_list, name='place-list'),
+    path('places/<int:pk>/', place_view.place_detail, name='place-detail'),
 
     # URLs for Search model
-    url('searches/', search_view.search_list, name='search-list'),
-    url('searches/<int:pk>/', search_view.search_detail, name='search-detail'),
+    path('searches/', search_view.search_list, name='search-list'),
+    path('searches/<int:pk>/', search_view.search_detail, name='search-detail'),
 
     # URLs for User model
-    url('users/', user_view.user_list, name='user-list'),
-    url('users/<int:pk>/', user_view.user_detail, name='user-detail'),
+    path('users/', user_view.user_list, name='user-list'),
+    path('users/<int:pk>/', user_view.user_detail, name='user-detail'),
 
-    url('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

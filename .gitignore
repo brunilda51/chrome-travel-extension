@@ -1,20 +1,20 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# See https:/frontend//frontend/help.github.com/frontend/ignore-files/frontend/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/frontend/node_modules
 
 # testing
-/coverage
+/frontend/coverage
 etc/
 
 # sonarqube
 .scannerwork
 
 # production
-/build
+/frontend/build
 
 # npmjs
-/dist
+/frontend/dist
 
 # misc
 .DS_Store
@@ -34,3 +34,5 @@ publish-amadeus/
 .eslintcache
 
 executables/secrets.json
+
+/backend/myenv2

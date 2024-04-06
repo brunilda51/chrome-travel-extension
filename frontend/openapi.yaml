@@ -1,4 +1,4 @@
-openapi: "3.1.0"
+openapi: '3.1.0'
 info:
   title: Airline Search API
   description: CRUD operations for Airlines, Places, Searches, and Users
@@ -6,82 +6,11 @@ info:
 servers:
   - url: http://localhost:8000/api/v1
 paths:
-  /airlines:
-    get:
-      summary: Get all airlines
-      responses:
-        "200":
-          description: A list of airlines
-    post:
-      summary: Add a new airline
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Airline"
-      responses:
-        "201":
-          description: Successfully created
-        "400":
-          description: Bad request
-  /airlines/{airlineId}:
-    get:
-      summary: Get a specific airline
-      parameters:
-        - in: path
-          name: airlineId
-          required: true
-          schema:
-            type: integer
-          description: ID of the airline
-      responses:
-        "200":
-          description: A single airline
-        "404":
-          description: Airline not found
-    put:
-      summary: Update an existing airline
-      parameters:
-        - in: path
-          name: airlineId
-          required: true
-          schema:
-            type: integer
-          description: ID of the airline
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Airline"
-      responses:
-        "200":
-          description: Successfully updated
-        "400":
-          description: Bad request
-        "404":
-          description: Airline not found
-    delete:
-      summary: Delete an existing airline
-      parameters:
-        - in: path
-          name: airlineId
-          required: true
-          schema:
-            type: integer
-          description: ID of the airline
-      responses:
-        "204":
-          description: Successfully deleted
-        "404":
-          description: Airline not found
-
   /places:
     get:
       summary: Get all places
       responses:
-        "200":
+        '200':
           description: A list of places
     post:
       summary: Add a new place
@@ -90,11 +19,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Place"
+              $ref: '#/components/schemas/Place'
       responses:
-        "201":
+        '201':
           description: Successfully created
-        "400":
+        '400':
           description: Bad request
   /places/{placeId}:
     get:
@@ -107,9 +36,9 @@ paths:
             type: integer
           description: ID of the place
       responses:
-        "200":
+        '200':
           description: A single place
-        "404":
+        '404':
           description: Place not found
     put:
       summary: Update an existing place
@@ -125,13 +54,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Place"
+              $ref: '#/components/schemas/Place'
       responses:
-        "200":
+        '200':
           description: Successfully updated
-        "400":
+        '400':
           description: Bad request
-        "404":
+        '404':
           description: Place not found
     delete:
       summary: Delete an existing place
@@ -143,16 +72,16 @@ paths:
             type: integer
           description: ID of the place
       responses:
-        "204":
+        '204':
           description: Successfully deleted
-        "404":
+        '404':
           description: Place not found
 
   /searches:
     get:
       summary: Get all searches
       responses:
-        "200":
+        '200':
           description: A list of searches
     post:
       summary: Add a new search
@@ -161,11 +90,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Search"
+              $ref: '#/components/schemas/Search'
       responses:
-        "201":
+        '201':
           description: Successfully created
-        "400":
+        '400':
           description: Bad request
   /searches/{searchId}:
     get:
@@ -178,9 +107,9 @@ paths:
             type: integer
           description: ID of the search
       responses:
-        "200":
+        '200':
           description: A single search
-        "404":
+        '404':
           description: Search not found
     put:
       summary: Update an existing search
@@ -196,13 +125,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Search"
+              $ref: '#/components/schemas/Search'
       responses:
-        "200":
+        '200':
           description: Successfully updated
-        "400":
+        '400':
           description: Bad request
-        "404":
+        '404':
           description: Search not found
     delete:
       summary: Delete an existing search
@@ -214,16 +143,16 @@ paths:
             type: integer
           description: ID of the search
       responses:
-        "204":
+        '204':
           description: Successfully deleted
-        "404":
+        '404':
           description: Search not found
 
   /users:
     get:
       summary: Get all users
       responses:
-        "200":
+        '200':
           description: A list of users
     post:
       summary: Add a new user
@@ -232,11 +161,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
       responses:
-        "201":
+        '201':
           description: Successfully created
-        "400":
+        '400':
           description: Bad request
   /users/{userId}:
     get:
@@ -249,9 +178,9 @@ paths:
             type: integer
           description: ID of the user
       responses:
-        "200":
+        '200':
           description: A single user
-        "404":
+        '404':
           description: User not found
     put:
       summary: Update an existing user
@@ -267,13 +196,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
       responses:
-        "200":
+        '200':
           description: Successfully updated
-        "400":
+        '400':
           description: Bad request
-        "404":
+        '404':
           description: User not found
     delete:
       summary: Delete an existing user
@@ -285,24 +214,13 @@ paths:
             type: integer
           description: ID of the user
       responses:
-        "204":
+        '204':
           description: Successfully deleted
-        "404":
+        '404':
           description: User not found
 
 components:
   schemas:
-    Airline:
-      type: object
-      properties:
-        airline_name:
-          type: string
-        id:
-          type: integer
-        sustainability_score:
-          type: number
-        description:
-          type: string
     Place:
       type: object
       properties:
@@ -321,8 +239,6 @@ components:
           type: integer
         sustainability_score:
           type: number
-        airline_id:
-          type: integer
         destination_id:
           type: integer
         flight_duration:

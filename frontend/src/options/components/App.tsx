@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import DrawerComponent from './drawer/Drawer';
 import MyFlightsComponent from './flights/MyFlights';
 import ProfileComponent from './profile/Profile';
