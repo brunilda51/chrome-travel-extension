@@ -12,8 +12,15 @@ chrome.tabs.onUpdated.addListener(handleTabUpdate);
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === 'sendLocalStorage') {
-    const desti = JSON.parse(message.data.BKHISTORY2).flights.destinationLocation;
+    const data = JSON.parse(message.data.BKHISTORY2).flights;
+    const { destinationLocation, origin_location, depart_date, return_date, travelers } = data;
 
-    await chrome.storage.local.set({ destination: desti });
+    await chrome.storage.local.set({
+      destination: destinationLocation,
+      origin: origin_location,
+      departDate: depart_date,
+      returnDate: return_date,
+      travelers: travelers,
+    });
   }
 });
