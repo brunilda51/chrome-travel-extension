@@ -22,5 +22,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       returnDate: return_date,
       travelers: travelers,
     });
+    chrome.runtime.sendMessage({ action: 'saveFlight' });
   }
 });
