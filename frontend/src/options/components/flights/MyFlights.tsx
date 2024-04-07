@@ -37,7 +37,7 @@ const MyFlightsComponent = () => {
 
   return (
     <Container maxWidth={'xl'}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h6" gutterBottom>
         My Flights Page
       </Typography>
       <div style={{ height: 400, width: '100%' }}>
