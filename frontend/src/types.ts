@@ -10,10 +10,11 @@ export interface Place {
 
 export interface Search {
   id?: number;
-  sustainability_score: number;
+  sustainability_score?: number;
   destination_code: string;
   origin_code: string;
-  flight_duration: string;
+  departure: string;
+  arrival: string;
 }
 
 export interface User {

@@ -23,6 +23,7 @@ const createSearch = async (newSearch: Search): Promise<Search> => {
     body: JSON.stringify(newSearch),
   });
   const data = await response.json();
+  console.log(data);
   return data;
 };
 

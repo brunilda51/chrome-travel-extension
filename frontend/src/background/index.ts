@@ -1,38 +1,28 @@
-import searchService from '../services/search.service'; // Assuming the path to searchService.ts is correct
+import searchService from '../services/search.service';
+import { Search } from '../types';
 
-// Example function to create a search in the background
-const createSearchInBackground = async (data: any) => {
+const createSearchInBackground = async (data: Search) => {
   try {
-    const dummySearchData = {
-      sustainability_score: 0.9,
-      destination_code: data.destinationMultiAirports[0].code,
-      origin_code: data.originMultiAirports[0].code,
-      flight_duration: '3 hours',
+    const searchData = {
+      destination_code: data.origin_code,
+      origin_code: data.destination_code,
+      departure: data.departure,
+      arrival: data.arrival,
     };
 
-    // Call the createSearch function
-    const createdSearch = await searchService.createSearch(dummySearchData);
-
-    console.log('Search created:', createdSearch);
+    const createdSearch = await searchService.createSearch(searchData);
+    console.log(createdSearch);
+    await chrome.storage.local.set({
+      searchData: searchData,
+    });
+    return createdSearch;
   } catch (error) {
     console.error('Error creating search:', error);
   }
 };
 
-// Listen for messages from content scripts
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (message, _sender, _sendResponse) => {
   if (message.action === 'sendLocalStorage') {
-    const data = JSON.parse(message.data.BKHISTORY2).flights;
-    const { destinationLocation, origin_location, depart_date, return_date, travelers, destination_code, origin_code } =
-      data;
-
-    await chrome.storage.local.set({
-      destination: destinationLocation,
-      origin: origin_location,
-      departDate: depart_date,
-      returnDate: return_date,
-      travelers: travelers,
-    });
-    createSearchInBackground(data);
+    await createSearchInBackground(message.data);
   }
 });
