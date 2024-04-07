@@ -5,7 +5,7 @@ const FlightCard = ({ flightData }: any) => {
   const { origin, destination, departDate, returnDate, travelers } = flightData;
 
   return (
-    <Card sx={{ padding: 10, boxShadow: 4, width: 400 }}>
+    <Card sx={{ padding: 2, boxShadow: 4, width: 400 }}>
       <CardHeader
         title={`${origin} to ${destination}`}
         subheader={`Departure: ${departDate} | Return: ${returnDate}`}

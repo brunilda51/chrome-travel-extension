@@ -10,7 +10,7 @@ from django.db import IntegrityError  # Import IntegrityError from django.db mod
 def user_list(request):
     if request.method == 'GET':
         users = User.objects.all()
-        data = [{'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password, 'googleid': user.googleid} for user in users]
+        data = [{'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password} for user in users]
         return JsonResponse(data, safe=False)
     
     elif request.method == 'POST':
@@ -23,13 +23,12 @@ def user_list(request):
             'last_name': data.get('last_name'),
             'email': data.get('email'),
             'username': data.get('username'),
-            'password': data.get('password'),
-            'googleid': data.get('googleid')
+            'password': data.get('password')
         }
         print(user_data)
         try:
             user = User.objects.create(**user_data)
-            return JsonResponse({'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password, 'googleid': user.googleid})
+            return JsonResponse({'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password})
         except IntegrityError as e:
             return JsonResponse({'error': str(e)}, status=400)  # Return the error message if IntegrityError occurs
     else:
@@ -45,7 +44,7 @@ def user_detail(request, pk):
     # Parse the JSON data
     data = json.loads(body)
     if request.method == 'GET':
-        obj = {'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password, 'googleid': user.googleid}
+        obj = {'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password}
         return JsonResponse(obj)
     
     elif request.method == 'PUT':
@@ -54,7 +53,6 @@ def user_detail(request, pk):
         user.email = data.get('email')
         user.username = data.get('username')
         user.password = data.get('password')
-        user.googleid = data.get('googleid')
         user.save()
         return JsonResponse({'message': 'User updated successfully'})
     
