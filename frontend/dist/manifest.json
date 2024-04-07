@@ -22,5 +22,5 @@
       "js": ["js/contentScript.js"]
     }
   ],
-  "permissions": ["storage"]
+  "permissions": ["storage", "notifications", "background"]
 }

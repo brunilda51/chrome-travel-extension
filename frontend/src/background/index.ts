@@ -1,6 +1,12 @@
 import searchService from '../services/search.service';
 import { Search } from '../types';
 
+export enum TemplateType {
+  basic = 'basic',
+  image = 'image',
+  list = 'list',
+  progress = 'progress',
+}
 const createSearchInBackground = async (data: Search) => {
   try {
     const createdSearch = await searchService.createSearch({
@@ -21,6 +27,18 @@ const createSearchInBackground = async (data: Search) => {
 
 chrome.runtime.onMessage.addListener(async (message, _sender, _sendResponse) => {
   if (message.action === 'sendLocalStorage') {
+    chrome.notifications.create(
+      'notificationId',
+      {
+        type: 'basic',
+        iconUrl: 'https://www.munich-startup.de/wp-content/uploads/2021/11/admin-ajax.php_.jpg',
+        title: 'Hello from eco mio!',
+        message: `Click here to see the sustainability info from your most recent trip search!`,
+      },
+      function (notificationId) {
+        console.log('Notification created with id: ' + notificationId);
+      },
+    );
     await createSearchInBackground(message.data);
   }
 });

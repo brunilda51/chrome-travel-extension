@@ -26,3 +26,20 @@ export interface User {
   password: string;
   username: string;
 }
+
+export interface Window {
+  hasRun?: boolean;
+}
+
+export interface FlightData {
+  website: Website;
+  origin_code: string;
+  destination_code: string;
+  departure: string;
+  arrival: string;
+}
+
+export enum Website {
+  SKYSCANNER = 'skyscanner',
+  KAYAK = 'kayak',
+}
