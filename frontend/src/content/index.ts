@@ -19,10 +19,10 @@ if (!window.hasRun) {
   const currentUrl = new URL(window.location.href);
 
   if (currentUrl.host.includes('skyscanner')) {
-    const origin_code = currentUrl.pathname.split('/')[3].substring(0, 3).toUpperCase(); // Extracting the first 3 characters
-    const destination_code = currentUrl.pathname.split('/')[4].substring(0, 3).toUpperCase(); // Extracting the first 3 characters
+    const origin_code = currentUrl.pathname.split('/')[3].substring(0, 3).toUpperCase();
+    const destination_code = currentUrl.pathname.split('/')[4].substring(0, 3).toUpperCase();
     const departure = currentUrl.pathname.split('/')[5];
-    const arrival = currentUrl.pathname.split('/')[6].split('?')[0]; // Extract arrival date
+    const arrival = currentUrl.pathname.split('/')[6].split('?')[0];
 
     sendMessageToBackground(Website.SKYSCANNER, origin_code, destination_code, departure, arrival);
   } else if (currentUrl.host.includes('kayak') && currentUrl.pathname.includes('/flights')) {

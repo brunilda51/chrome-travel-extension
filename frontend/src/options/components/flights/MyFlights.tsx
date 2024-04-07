@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Container, Typography } from '@mui/material'; // Import Material-UI components
+import { Container, Typography } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import searchService from '../../../services/search.service';
 import { Search } from '../../../types';
-
-import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
-import { EmojiNature } from '@mui/icons-material';
+import SustainabilityEmojis from '../../../sharedComponents/SustainabilityScore';
 
 const MyFlightsComponent = () => {
   const [flights, setFlights] = useState<Search[]>([]);
@@ -22,28 +21,27 @@ const MyFlightsComponent = () => {
     fetchFlights();
   }, []);
 
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'origin_code', headerName: 'Origin Code', width: 130 },
+    { field: 'destination_code', headerName: 'Destination Code', width: 160 },
+    {
+      field: 'sustainability_score',
+      headerName: 'Sustainability Score',
+      width: 200,
+      renderCell: (params) => (
+        <SustainabilityEmojis sustainabilityScore={params.value ? params.value : 1}></SustainabilityEmojis>
+      ),
+    },
+  ];
+
   return (
-    <Container maxWidth={'sm'}>
+    <Container maxWidth={'xl'}>
       <Typography variant="h4" gutterBottom>
         My Flights Page
       </Typography>
-      <div>
-        {flights.map((flight) => (
-          <Card key={flight.id} style={{ marginBottom: '10px' }}>
-            <CardContent>
-              <Typography variant="h5" component="div">
-                {flight.origin_code} to {flight.destination_code}
-              </Typography>
-              <Typography variant="body2">
-                Sustainability Score:
-                {new Array(flight.sustainability_score).fill(null).map((element, index) => (
-                  <EmojiNature key={index} style={{ color: 'green' }} />
-                ))}
-              </Typography>
-              <Typography variant="body2">Flight Duration: {flight.flight_duration}</Typography>
-            </CardContent>
-          </Card>
-        ))}
+      <div style={{ height: 400, width: '100%' }}>
+        <DataGrid rows={flights} checkboxSelection={false} columns={columns} autoPageSize={true} />
       </div>
     </Container>
   );

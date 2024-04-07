@@ -3,17 +3,15 @@ import { Search } from '../types';
 
 const createSearchInBackground = async (data: Search) => {
   try {
-    const searchData = {
-      destination_code: data.origin_code,
-      origin_code: data.destination_code,
+    const createdSearch = await searchService.createSearch({
+      destination_code: data.destination_code,
+      origin_code: data.origin_code,
       departure: data.departure,
       arrival: data.arrival,
-    };
+    });
 
-    const createdSearch = await searchService.createSearch(searchData);
-    console.log(createdSearch);
     await chrome.storage.local.set({
-      searchData: searchData,
+      searchData: createdSearch,
     });
     return createdSearch;
   } catch (error) {
