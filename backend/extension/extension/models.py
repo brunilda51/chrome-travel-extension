@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Place(models.Model):
     city_name = models.CharField(max_length=255)
@@ -19,6 +20,8 @@ class Search(models.Model):
     id = models.AutoField(primary_key=True) 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     sustainability_score = models.FloatField()
-    destination_code = models.CharField(max_length=50)  # Assuming destination code length
-    origin_code = models.CharField(max_length=50)  # Assuming origin code length
-    flight_duration = models.CharField(max_length=255)
+    destination_code = models.CharField(max_length=50)
+    origin_code = models.CharField(max_length=50)  
+    departure_date = models.DateField(default=timezone.now)
+    arrival_date = models.DateField(default=timezone.now)
+    timestamp_added = models.DateTimeField(default=timezone.now)
