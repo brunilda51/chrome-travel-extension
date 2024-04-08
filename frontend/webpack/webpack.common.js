@@ -1,4 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
@@ -17,16 +17,7 @@ module.exports = {
     filename: '[name].js',
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/popup/popup.html',
-      filename: 'popup.html', // Specify the filename for popup.html
-      inject: false,
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/options/options.html',
-      filename: 'options.html', // Specify the filename for options.html
-      inject: false,
-    }),
+    ...getHtmlPlugins(['popup', 'options']),
     new CopyPlugin({
       patterns: [
         { from: 'public', to: '../' },
@@ -35,6 +26,7 @@ module.exports = {
       options: {},
     }),
   ],
+
   module: {
     rules: [
       {
@@ -61,3 +53,13 @@ module.exports = {
     extensions: ['.js', '.ts', '.tsx'],
   },
 };
+function getHtmlPlugins(chunks) {
+  return chunks.map(
+    (chunk) =>
+      new HtmlPlugin({
+        title: 'Eco Mio',
+        filename: `${chunk}.html`,
+        chunks: [chunk],
+      }),
+  );
+}

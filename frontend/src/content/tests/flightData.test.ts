@@ -1,16 +1,16 @@
 import { extractFlightDataFromUrl, sendMessageToBackground } from '../';
 import { Website } from '../../types';
 
-jest.mock('chrome', () => ({
+// Mock the chrome runtime sendMessage function
+const chrome = {
   runtime: {
     sendMessage: jest.fn(),
-    // Add other methods and properties you need to mock
   },
-}));
+};
 describe('extractFlightDataFromUrl', () => {
   test('should extract flight data from Skyscanner URL', () => {
     const url =
-      'https://www.skyscanner.com/flight-s earch/ABC-XYZ/2024-04-07/2024-04-10?adults=1&children=0&adultsv2=1&childrenv2=&infants=0&cabinclass=economy&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false';
+      'https://www.skyscanner.com/flight-search/ABC-XYZ/2024-04-07/2024-04-10?adults=1&children=0&adultsv2=1&childrenv2=&infants=0&cabinclass=economy&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false';
 
     const flightData = extractFlightDataFromUrl(url);
 

@@ -15,7 +15,28 @@ enum Website {
   KAYAK = 'kayak',
 }
 
-if (!window.hasRun) {
+export const sendMessageToBackground = (
+  website: Website,
+  origin_code: string,
+  destination_code: string,
+  departure: string,
+  arrival: string,
+) => {
+  const flightData: FlightData = {
+    website,
+    origin_code,
+    destination_code,
+    departure,
+    arrival,
+  };
+
+  chrome.runtime.sendMessage({
+    action: 'sendLocalStorage',
+    data: flightData,
+  });
+};
+
+if (!(window as Window).hasRun) {
   const currentUrl = new URL(window.location.href);
 
   if (currentUrl.host.includes('skyscanner')) {
@@ -32,50 +53,6 @@ if (!window.hasRun) {
 
     sendMessageToBackground(Website.KAYAK, origin_code, destination_code, departure, arrival);
   }
-  showNotification('Click here to see the sustainability info from your most recent trip search!');
-  window.hasRun = true;
-}
-function showNotification(message: string) {
-  // Create a div element for the notification
-  const notification = document.createElement('div');
-  notification.className = 'extension-notification';
-  notification.textContent = message;
 
-  // Style the notification (you can adjust styles as needed)
-  notification.style.position = 'fixed';
-  notification.style.bottom = '20px';
-  notification.style.right = '20px';
-  notification.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-  notification.style.color = '#fff';
-  notification.style.padding = '10px';
-  notification.style.borderRadius = '5px';
-  notification.style.zIndex = '9999';
-
-  // Append the notification to the body of the page
-  document.body.appendChild(notification);
-
-  // Automatically remove the notification after a certain time (e.g., 5 seconds)
-  setTimeout(() => {
-    notification.remove();
-  }, 5000); // Adjust the time as needed
-}
-function sendMessageToBackground(
-  website: Website,
-  origin_code: string,
-  destination_code: string,
-  departure: string,
-  arrival: string,
-) {
-  const flightData: FlightData = {
-    website,
-    origin_code,
-    destination_code,
-    departure,
-    arrival,
-  };
-
-  chrome.runtime.sendMessage({
-    action: 'sendLocalStorage',
-    data: flightData,
-  });
+  (window as Window).hasRun = true;
 }

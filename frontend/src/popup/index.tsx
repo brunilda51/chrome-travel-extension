@@ -1,7 +1,9 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
 import App from './components/App';
+import '../styles/globals.css';
+const rootDiv = document.createElement('div');
+document.body.appendChild(rootDiv);
 
-const root = createRoot(document.getElementById('root') as HTMLElement);
+const root = createRoot(rootDiv);
 root.render(<App />);
