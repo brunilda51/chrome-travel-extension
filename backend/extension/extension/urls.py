@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.contrib import admin
-from .views import place_view, search_view, user_view
+from .views import search_view, user_view
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 import yaml
@@ -38,9 +38,6 @@ schema_view = get_schema_view(
     public=True,
 )
 urlpatterns = [
-    # URLs for Place model
-    path('places/', place_view.place_list, name='place-list'),
-    path('places/<int:pk>/', place_view.place_detail, name='place-detail'),
 
     # URLs for Search model
     path('searches/', search_view.search_list, name='search-list'),

@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from ..models import Place, Search, User
+from ..models import Search, User
 from django.core.exceptions import ObjectDoesNotExist
 import json  # Import the json module
 from django.db import IntegrityError  # Import IntegrityError from django.db module
@@ -37,17 +37,18 @@ def user_list(request):
 def user_detail(request, pk):
     try:
         user = User.objects.get(pk=pk)
+        print(user)
     except User.DoesNotExist:
         return JsonResponse({'error': 'User does not exist'}, status=404)
-    body = request.body.decode('utf-8')
-        
-    # Parse the JSON data
-    data = json.loads(body)
+
     if request.method == 'GET':
-        obj = {'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username, 'password': user.password}
+        obj = {'id': user.id, 'name': user.name, 'last_name': user.last_name, 'email': user.email, 'username': user.username}
         return JsonResponse(obj)
     
     elif request.method == 'PUT':
+        body = request.body.decode('utf-8')
+        # Parse the JSON data
+        data = json.loads(body)
         user.name = data.get('name')
         user.last_name = data.get('last_name')
         user.email = data.get('email')

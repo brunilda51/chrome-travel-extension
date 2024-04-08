@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from ..models import  Place, Search, User
+from ..models import Search, User
 from django.core.exceptions import ObjectDoesNotExist
 import random
 from django.utils import timezone
@@ -11,7 +11,7 @@ from datetime import datetime
 def search_list(request):
     if request.method == 'GET':
         searches = Search.objects.all()
-        data = [{'id': search.id, 'sustainability_score': search.sustainability_score, 'origin_code': search.origin_code, 'destination_code': search.destination_code, 'departure_date': search.departure_date, 'arrival_date':search.arrival_date} for search in searches]
+        data = [{'id': search.id, 'sustainability_score': search.sustainability_score, 'origin_code': search.origin_code, 'destination_code': search.destination_code, 'departure_date': search.departure_date, 'arrival_date':search.arrival_date, 'timestamp_added':search.timestamp_added} for search in searches]
         return JsonResponse(data, safe=False)
     
     elif request.method == 'POST':
