@@ -1,19 +1,4 @@
-interface Window {
-  hasRun?: boolean;
-}
-
-interface FlightData {
-  website: Website;
-  origin_code: string;
-  destination_code: string;
-  departure: string;
-  arrival: string;
-}
-
-enum Website {
-  SKYSCANNER = 'skyscanner',
-  KAYAK = 'kayak',
-}
+import { FlightData, Website, Window } from '../types';
 
 export const sendMessageToBackground = (
   website: Website,
