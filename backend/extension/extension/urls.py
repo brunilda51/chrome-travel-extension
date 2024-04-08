@@ -41,7 +41,8 @@ urlpatterns = [
 
     # URLs for Search model
     path('searches/', search_view.search_list, name='search-list'),
-    path('searches/<int:pk>/', search_view.search_detail, name='search-detail'),
+    path('searches/latest_destination_codes', search_view.latest_destination_codes),
+    path('searches/detail/<int:pk>/', search_view.search_detail, name='search-detail'),
 
     # URLs for User model
     path('users/', user_view.user_list, name='user-list'),

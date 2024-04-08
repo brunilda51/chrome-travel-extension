@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import random
 from django.utils import timezone
 from datetime import datetime
+from django.db import connection
 
 @csrf_exempt
 def search_list(request):
@@ -87,3 +88,22 @@ def search_detail(request, pk):
     elif request.method == 'DELETE':
         search.delete()
         return JsonResponse({'message': 'Search deleted successfully'}, status=204)
+        
+def latest_destination_codes(request):
+    # Execute raw SQL query to fetch the latest 5 distinct destination codes
+    query = """
+        SELECT destination_code, MAX(timestamp_added) AS latest_timestamp
+        FROM extension.extension_search
+        GROUP BY destination_code
+        ORDER BY latest_timestamp DESC
+        LIMIT 5;
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+    # Extract destination codes from the query result
+    destination_codes = [row[0] for row in rows]
+
+    # Return the destination codes as a JSON response
+    return JsonResponse({'destination_codes': destination_codes})
