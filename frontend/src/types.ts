@@ -26,6 +26,10 @@ export interface User {
   username: string;
 }
 
+export interface DestinationCodes {
+  destination_codes: string[];
+}
+
 export interface Window {
   hasRun?: boolean;
 }
@@ -41,4 +45,23 @@ export interface FlightData {
 export enum Website {
   SKYSCANNER = 'skyscanner',
   KAYAK = 'kayak',
+}
+
+export interface AQIData {
+  status: string;
+  data: {
+    city: {
+      name: string;
+    };
+    forecast: {
+      daily: {
+        [pollutant: string]: {
+          avg: number;
+          day: string;
+          max: number;
+          min: number;
+        }[];
+      };
+    };
+  };
 }

@@ -19,7 +19,6 @@ const ProfileComponent = () => {
     fetchUser();
   }, []);
 
-  // Generate an auto-generated avatar based on the user's name
   const avatarInitials = `${user?.name.charAt(0)}`;
 
   return (

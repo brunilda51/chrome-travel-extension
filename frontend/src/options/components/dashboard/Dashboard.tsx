@@ -2,27 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { CircularProgress, Container } from '@mui/material';
+import searchService from '../../../services/search.service';
+import { AQIData } from '../../../types';
+import { getAirQualityData } from '../../../services/airquality.service';
 
 Chart.register(...registerables);
-
-interface AQIData {
-  status: string;
-  data: {
-    city: {
-      name: string;
-    };
-    forecast: {
-      daily: {
-        [pollutant: string]: {
-          avg: number;
-          day: string;
-          max: number;
-          min: number;
-        }[];
-      };
-    };
-  };
-}
 
 const ComparativeAQIChart: React.FC = () => {
   const [chartDataPM25, setChartDataPM25] = useState<any>(null);
@@ -32,12 +16,8 @@ const ComparativeAQIChart: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cities = ['BER', 'LAX', 'NYC', 'PAR', 'MIL'];
-        const promises = cities.map((city) =>
-          fetch(`https://api.waqi.info/feed/${city}/?token=056035c054eb5d5a97ab40ab56a12133ac6ec590`).then((response) =>
-            response.json(),
-          ),
-        );
+        const cities = (await searchService.getLatestSearches()).destination_codes;
+        const promises = cities.map((city) => getAirQualityData(city));
 
         const responses: AQIData[] = await Promise.all(promises);
 
@@ -61,7 +41,6 @@ const ComparativeAQIChart: React.FC = () => {
             };
           });
 
-        // Setting chart data
         setChartDataPM25({
           labels: formattedDates,
           datasets: createDataSet('pm25'),

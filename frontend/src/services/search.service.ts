@@ -1,6 +1,7 @@
-import { Search } from '../types';
+import { DestinationCodes, Search } from '../types';
+import { API_URL } from './urlHelper';
 
-const baseUrl = 'http://localhost:8000/searches/';
+const baseUrl = `${API_URL}/searches/`;
 
 const getAllSearches = async (): Promise<Search[]> => {
   const response = await fetch(baseUrl);
@@ -9,7 +10,13 @@ const getAllSearches = async (): Promise<Search[]> => {
 };
 
 const getSearchById = async (id: number): Promise<Search> => {
-  const response = await fetch(`${baseUrl}${id}/`);
+  const response = await fetch(`/details/${baseUrl}${id}/`);
+  const data = await response.json();
+  return data;
+};
+
+const getLatestSearches = async (): Promise<DestinationCodes> => {
+  const response = await fetch(`${baseUrl}latest_destination_codes`);
   const data = await response.json();
   return data;
 };
@@ -28,7 +35,7 @@ const createSearch = async (newSearch: Search): Promise<Search> => {
 };
 
 const updateSearch = async (id: number, updatedSearch: Search): Promise<Search> => {
-  const response = await fetch(`${baseUrl}${id}/`, {
+  const response = await fetch(`/details/${baseUrl}${id}/`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -40,13 +47,14 @@ const updateSearch = async (id: number, updatedSearch: Search): Promise<Search> 
 };
 
 const deleteSearch = async (id: number): Promise<void> => {
-  await fetch(`${baseUrl}${id}/`, {
+  await fetch(`/details/${baseUrl}${id}/`, {
     method: 'DELETE',
   });
 };
 
 export default {
   getAllSearches,
+  getLatestSearches,
   getSearchById,
   createSearch,
   updateSearch,
