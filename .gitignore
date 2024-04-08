@@ -14,7 +14,7 @@ etc/
 /frontend/build
 
 # npmjs
-/frontend/dist
+frontend/dist
 
 # misc
 .DS_Store
