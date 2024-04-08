@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { Container } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 
 Chart.register(...registerables);
 
@@ -28,7 +28,7 @@ const ComparativeAQIChart: React.FC = () => {
   const [chartDataPM25, setChartDataPM25] = useState<any>(null);
   const [chartDataPM10, setChartDataPM10] = useState<any>(null);
   const [chartDataO3, setChartDataO3] = useState<any>(null);
-
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -76,6 +76,7 @@ const ComparativeAQIChart: React.FC = () => {
           labels: formattedDates,
           datasets: createDataSet('o3'),
         });
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -85,78 +86,87 @@ const ComparativeAQIChart: React.FC = () => {
   }, []);
 
   return (
-    <Container maxWidth="md">
-      <h2>Comparative Air Quality Analysis</h2>
-      <h3>PM2.5</h3>
-      {chartDataPM25 && (
-        <Bar
-          data={chartDataPM25}
-          options={{
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'PM2.5 AQI',
+    <Container
+      maxWidth="md"
+      style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}
+    >
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <h2>Comparative Air Quality Analysis</h2>
+          <h3>PM2.5</h3>
+          {chartDataPM25 && (
+            <Bar
+              data={chartDataPM25}
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: 'PM2.5 AQI',
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Date',
+                    },
+                  },
                 },
-              },
-              x: {
-                title: {
-                  display: true,
-                  text: 'Date',
-                },
-              },
-            },
-          }}
-        />
-      )}
+              }}
+            />
+          )}
 
-      <h3>PM10</h3>
-      {chartDataPM10 && (
-        <Bar
-          data={chartDataPM10}
-          options={{
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'PM10 AQI',
+          <h3>PM10</h3>
+          {chartDataPM10 && (
+            <Bar
+              data={chartDataPM10}
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: 'PM10 AQI',
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Date',
+                    },
+                  },
                 },
-              },
-              x: {
-                title: {
-                  display: true,
-                  text: 'Date',
-                },
-              },
-            },
-          }}
-        />
-      )}
+              }}
+            />
+          )}
 
-      <h3>Ozone (O3)</h3>
-      {chartDataO3 && (
-        <Bar
-          data={chartDataO3}
-          options={{
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'Ozone (O3) AQI',
+          <h3>Ozone (O3)</h3>
+          {chartDataO3 && (
+            <Bar
+              data={chartDataO3}
+              options={{
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: 'Ozone (O3) AQI',
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Date',
+                    },
+                  },
                 },
-              },
-              x: {
-                title: {
-                  display: true,
-                  text: 'Date',
-                },
-              },
-            },
-          }}
-        />
+              }}
+            />
+          )}
+        </>
       )}
     </Container>
   );

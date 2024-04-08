@@ -1,6 +1,6 @@
 import { User } from '../types';
 
-const baseUrl = '/api/users/';
+const baseUrl = 'http://localhost:8000/users/';
 
 const getAllUsers = async (): Promise<User[]> => {
   const response = await fetch(baseUrl);

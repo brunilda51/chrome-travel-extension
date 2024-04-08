@@ -20,7 +20,6 @@ export interface Search {
 export interface User {
   id?: number;
   email: string;
-  googleid: string;
   last_name: string;
   name: string;
   password: string;
