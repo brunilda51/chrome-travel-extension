@@ -22,7 +22,7 @@ const DrawerComponent: React.FC = () => {
         <List sx={{ width: '230px' }}>
           {['My Flights', 'Profile'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <Link to={index === 0 ? '/' : '/profile'} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link to={index === 0 ? '/my-flights' : '/profile'} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <ListItemButton>
                   <ListItemIcon>{index % 2 === 0 ? <FlightTakeoffIcon /> : <Face2Icon />}</ListItemIcon>
                   <ListItemText primary={text} />

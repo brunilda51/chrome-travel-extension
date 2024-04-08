@@ -41,7 +41,7 @@ const MyFlightsComponent = () => {
         My Flights Page
       </Typography>
       <div style={{ height: 400, width: '100%' }}>
-        <DataGrid rows={flights} checkboxSelection={false} columns={columns} autoPageSize={true} />
+        <DataGrid rows={flights} checkboxSelection={false} columns={columns} />
       </div>
     </Container>
   );
