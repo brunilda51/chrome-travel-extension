@@ -81,21 +81,6 @@ Your db should be setup with an initial user and your backend should be up and r
     ├── LICENSE
     ├── README.md
     ├── dist
-    │   ├── images
-    │   │   └── icons
-    │   │       ├── ecomio128.png
-    │   │       ├── ecomio16.png
-    │   │       ├── ecomio32.png
-    │   │       ├── ecomio48.png
-    │   │       └── favicon.ico
-    │   ├── js
-    │   │   ├── background.js
-    │   │   ├── contentScript.js
-    │   │   ├── options.html
-    │   │   ├── options.js
-    │   │   ├── popup.html
-    │   │   └── popup.js
-    │   └── manifest.json
     ├── jest-puppeteer.config.ts
     ├── jest.config.ts
     ├── jest.setup.js
@@ -107,13 +92,6 @@ Your db should be setup with an initial user and your backend should be up and r
     │   └── manifest.json
     ├── src
     │   ├── assets
-    │   │   └── images
-    │   │       └── icons
-    │   │           ├── ecomio128.png
-    │   │           ├── ecomio16.png
-    │   │           ├── ecomio32.png
-    │   │           ├── ecomio48.png
-    │   │           └── favicon.ico
     │   ├── background
     │   │   ├── index.d.ts
     │   │   └── index.ts
