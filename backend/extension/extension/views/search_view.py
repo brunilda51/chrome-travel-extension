@@ -48,7 +48,7 @@ def search_list(request):
         else:
             # If no existing search found, create a new search record
             search_data = {
-                'sustainability_score': 3,
+                'sustainability_score': random.randint(1, 5),
                 'origin_code': data.get('origin_code'),
                 'user_id': 1,
                 'destination_code': data.get('destination_code'),
