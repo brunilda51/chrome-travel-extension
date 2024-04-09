@@ -1,4 +1,4 @@
-export const DateFormatter = ({ date }: any) => {
+export const dateFormatter = ({ date }: any) => {
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',

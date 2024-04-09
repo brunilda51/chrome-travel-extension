@@ -3,96 +3,6 @@ info:
   title: CRUD API for Django Models
   version: 1.0.0
 paths:
-  /places/:
-    get:
-      summary: Retrieve all places
-      tags:
-        - Places
-      operationId: listAllPlaces
-      responses:
-        '200':
-          description: A list of places
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Place'
-    post:
-      summary: Create a new place
-      tags:
-        - Places
-      operationId: createPlace
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Place'
-      responses:
-        '201':
-          description: The created place
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Place'
-  /places/{place_id}/:
-    get:
-      summary: Retrieve a specific place
-      tags:
-        - Places
-      operationId: getPlaceById
-      parameters:
-        - in: path
-          name: place_id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: The requested place
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Place'
-    put:
-      summary: Update a specific place
-      tags:
-        - Places
-      operationId: updatePlace
-      parameters:
-        - in: path
-          name: place_id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Place'
-      responses:
-        '200':
-          description: The updated place
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Place'
-    delete:
-      summary: Delete a specific place
-      tags:
-        - Places
-      operationId: deletePlace
-      parameters:
-        - in: path
-          name: place_id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: The place has been deleted
   /searches/:
     get:
       summary: Retrieve all searches
@@ -275,17 +185,6 @@ paths:
           description: The user has been deleted
 components:
   schemas:
-    Place:
-      type: object
-      properties:
-        city_name:
-          type: string
-        country_name:
-          type: string
-        id:
-          type: integer
-        description:
-          type: string
     Search:
       type: object
       properties:
@@ -295,9 +194,13 @@ components:
           type: number
         destination_code:
           type: string
-        flight_duration:
+        timestamp_added:
           type: string
         origin_code:
+          type: string
+        arrival_date:
+          type: string
+        departure_date:
           type: string
     User:
       type: object
@@ -305,8 +208,6 @@ components:
         email:
           type: string
           format: email
-        googleid:
-          type: string
         id:
           type: integer
         last_name:
@@ -318,8 +219,6 @@ components:
         username:
           type: string
 tags:
-  - name: Places
-    description: Operations related to places
   - name: Searches
     description: Operations related to searches
   - name: Users
