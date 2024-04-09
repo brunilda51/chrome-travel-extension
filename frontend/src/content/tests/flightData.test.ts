@@ -1,46 +1,36 @@
-import { extractFlightDataFromUrl, sendMessageToBackground } from '../';
-import { Website } from '../../types';
+import { extractFromURL } from '../'; // Make sure to import your function from the correct file
+import { Website } from '../../types'; // Assuming you have a type definition file for Website enum
 
-// Mock the chrome runtime sendMessage function
-const chrome = {
-  runtime: {
-    sendMessage: jest.fn(),
-  },
-};
-describe('extractFlightDataFromUrl', () => {
-  test('should extract flight data from Skyscanner URL', () => {
-    const url =
-      'https://www.skyscanner.com/flight-search/ABC-XYZ/2024-04-07/2024-04-10?adults=1&children=0&adultsv2=1&childrenv2=&infants=0&cabinclass=economy&rtn=1&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false';
-
-    const flightData = extractFlightDataFromUrl(url);
-
-    expect(flightData).toEqual({
+describe('extractFromURL function', () => {
+  it('should extract data for Skyscanner URL', () => {
+    const mockCurrentUrl = new URL('https://www.skyscanner.de/transport/flights/ber/mila/240501/240524/?adultsv2=1');
+    const expectedData = {
       website: Website.SKYSCANNER,
-      origin_code: 'ABC',
-      destination_code: 'XYZ',
-      departure: '2024-04-07',
-      arrival: '2024-04-10',
-    });
-  });
-
-  // Add more test cases for other scenarios (e.g., Kayak URL)
-});
-
-describe('sendMessageToBackground', () => {
-  test('should send message to background', () => {
-    const flightData = {
-      website: Website.SKYSCANNER,
-      origin_code: 'ABC',
-      destination_code: 'XYZ',
-      departure: '2024-04-07',
-      arrival: '2024-04-10',
+      origin_code: 'BER',
+      destination_code: 'MIL',
+      departure: '240501',
+      arrival: '240524',
     };
 
-    sendMessageToBackground(flightData);
+    expect(extractFromURL(mockCurrentUrl)).toEqual(expectedData);
+  });
 
-    expect(chrome.runtime.sendMessage).toHaveBeenCalledWith({
-      action: 'sendLocalStorage',
-      data: flightData,
-    });
+  it('should extract data for Kayak URL', () => {
+    const mockCurrentUrl = new URL('https://www.kayak.de/flights/FRA-NYC/2024-05-05/2024-05-19');
+    const expectedData = {
+      website: Website.KAYAK,
+      origin_code: 'FRA',
+      destination_code: 'NYC',
+      departure: '2024-05-05',
+      arrival: '2024-05-19',
+    };
+
+    expect(extractFromURL(mockCurrentUrl)).toEqual(expectedData);
+  });
+
+  it('should return undefined for non-supported URL', () => {
+    const mockCurrentUrl = new URL('https://www.google.com');
+
+    expect(extractFromURL(mockCurrentUrl)).toBeUndefined();
   });
 });
