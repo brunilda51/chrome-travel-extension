@@ -22,7 +22,7 @@ const FlightCard = ({ flightData }: any) => {
   return (
     <Card sx={{ padding: 2, boxShadow: 4, width: 300 }}>
       <CardHeader
-        title={`${origin_code} to ${destination_code}`}
+        title={`Last search saved: ${origin_code} to ${destination_code}`}
         subheader={<span style={{ color: '#fff' }}>{`Departure: ${departure} | Return: ${arrival}`}</span>}
         sx={{ backgroundColor: '#3f51b5', color: '#fff' }}
       />
